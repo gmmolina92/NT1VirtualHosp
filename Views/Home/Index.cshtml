@@ -1,0 +1,71 @@
+﻿@model IEnumerable<VirtualHosp.Models.Consulta>
+@{
+    ViewData["Title"] = "Gestion consultas";
+}
+
+<div class="text-center">
+    <h2>Aquí podrá gestionar las consultas generadas:</h2>
+    <br />
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Coseguro)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Medico)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Paciente)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        $@Html.DisplayFor(modelItem => item.Coseguro)
+                    </td>
+                    <td>
+                        @if (item.Medico != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.Medico.NombreCompleto)
+
+                        }
+                    </td>
+                    <td>
+                        @if (item.Paciente != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.Paciente.NombreCompleto)
+
+                        }
+                    </td>
+                    <td>
+                        @if (item.Estado == VirtualHosp.Models.Enums.Estado.FINALIZADO || item.Estado == VirtualHosp.Models.Enums.Estado.CANCELADO || item.Estado == VirtualHosp.Models.Enums.Estado.AUSENTE)
+                        {
+                            <a asp-route-id="@item.Id" asp-action="Details" asp-controller="Consultas" class="btn btn-info"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        }
+                        else
+                        {
+                            <a asp-route-id="@item.Id" asp-action="Gestionar" asp-controller="Consultas" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
