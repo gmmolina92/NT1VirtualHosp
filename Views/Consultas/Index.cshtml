@@ -1,0 +1,84 @@
+﻿@model IEnumerable<VirtualHosp.Models.Consulta>
+
+@{
+    ViewData["Title"] = "Consultas";
+}
+
+<h1>Lista de consultas</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus"></span>
+        Agregar consulta
+    </a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Coseguro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Medico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Paciente)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.Coseguro)
+            </td>
+            <td>
+                @if (item.Medico == null)
+                {
+                    <a asp-route-id="@item.Id" asp-action="AddMedico" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Agregar
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Medico.NombreCompleto)
+                }
+
+            </td>
+            <td>
+                @if (item.Paciente == null)
+                {
+                    <a asp-route-id="@item.Id" asp-action="AddPaciente" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Agregar
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Paciente.NombreCompleto)
+                }
+
+            </td>
+            <td>
+                <a asp-route-id="@item.Id" asp-action="Details" class="btn btn-info"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <a asp-route-id="@item.Id" asp-action="Edit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a asp-route-id="@item.Id" asp-action="Delete" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
